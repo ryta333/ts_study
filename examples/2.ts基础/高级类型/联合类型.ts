@@ -23,6 +23,7 @@ function getSmallPet(): Fish | Bird {
   return {} as Fish
 }
 
+// 使用is进行类型保护 会在下文if之后的块级作用域中生效
 function isFish(pet: Fish | Bird): pet is Fish {
   return (pet as Fish).swim() !== undefined
 }
@@ -34,4 +35,37 @@ if (isFish(pet)) {
   pet.swim()
 } else {
   pet.fly()
+}
+
+class Bird2 {
+  fly() {
+    console.log('bird fly')
+  }
+  layEggs() {
+    console.log('bird lay eggs')
+  }
+}
+
+class Fish2 {
+  swim() {
+    console.log('fish swim')
+  }
+  layEggs() {
+    console.log('fish lay eggs')
+  }
+}
+
+function getRandomPet(): Fish | Bird {
+  return Math.random() > 0.5 ? new Bird2() : new Fish2()
+}
+
+let pet2 = getRandomPet()
+
+// instanceof类型保护
+if (pet instanceof Bird2) {
+  pet.fly()
+}
+
+if (pet instanceof Fish2) {
+  pet.swim()
 }
